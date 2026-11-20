@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lately</title>
+<style>
+:root{--bg:#eef2f5;--card:#fff;--tx:#14212b;--mu:#5b6b78;--bd:#d5dde3;--ac:#3a46c8;--acbg:#e3e6fb;--gl:3px;--n1:#00a3c4;--n2:#e8730c;--n3:#8a4dff;--n4:#e0287f;--n5:#5da000;--n6:#2f6bff;--ok:#3d8f26;--am:#d9a000;--or:#e8680f;--bad:#d23c3c;--nv:#8796a2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--card:#18232b;--tx:#e8eef2;--mu:#93a3b0;--bd:#2a3943;--ac:#8f9bff;--acbg:#252c5c;--gl:9px;--n1:#22e5ff;--n2:#ff9a3d;--n3:#b57bff;--n4:#ff4fa3;--n5:#b6ff3d;--n6:#4d8dff;--ok:#6fcf4d;--am:#ffd23f;--or:#ff8c3a;--bad:#ff5c5c;--nv:#6e7f8c}}
+:root[data-theme="dark"]{--bg:#0f171d;--card:#18232b;--tx:#e8eef2;--mu:#93a3b0;--bd:#2a3943;--ac:#8f9bff;--acbg:#252c5c;--gl:9px;--n1:#22e5ff;--n2:#ff9a3d;--n3:#b57bff;--n4:#ff4fa3;--n5:#b6ff3d;--n6:#4d8dff;--ok:#6fcf4d;--am:#ffd23f;--or:#ff8c3a;--bad:#ff5c5c;--nv:#6e7f8c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:520px;margin:0 auto;padding:18px 14px 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:22px}
+h1{font-size:26px;margin:0;font-weight:700;letter-spacing:-.02em}
+.tools{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.gear{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:4px 8px;font-size:17px;cursor:pointer}
+.srow{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.sheet h4{margin:14px 0 4px;font-size:15px}
+.sub{color:var(--mu);margin:2px 0 16px;font-size:14px}
+select,input{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);min-width:0}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px;margin-bottom:18px}
+.cat{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:12px 4px 9px;font:inherit;font-size:13px;cursor:pointer;text-align:center}
+.cat{border:2px solid var(--nc);box-shadow:0 0 var(--gl) var(--nc);border-radius:14px;padding:12px 4px 9px}
+.cat[aria-pressed="true"]{background:var(--acbg);font-weight:600;box-shadow:0 0 calc(var(--gl)*2.2) var(--nc),inset 0 0 8px var(--nc)}
+.ic{display:grid;place-items:center}
+.ic svg{width:54px;height:54px}
+.cat .n{position:absolute;top:-6px;right:-4px;background:var(--bad);color:#fff;border-radius:10px;font-size:11px;min-width:20px;padding:1px 5px;font-weight:600}
+.item{--rc:var(--nv);display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;background:var(--card);border:1px solid var(--bd);border-inline-start:6px solid var(--rc);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.ok{--rc:var(--ok)}.am{--rc:var(--am)}.or{--rc:var(--or)}.bad{--rc:var(--bad)}
+.nm{font-weight:600}
+.big{grid-row:1/3;grid-column:2;text-align:end;line-height:1}
+.big span{font-size:34px;font-weight:700;letter-spacing:-.03em;color:color-mix(in srgb,var(--rc) 80%,var(--tx))}
+.big small{display:block;font-size:12px;color:var(--mu);margin-top:2px}
+.row{grid-column:1/3;display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.pill{font-size:12px;border-radius:20px;padding:2px 10px;font-weight:600;background:color-mix(in srgb,var(--rc) 20%,var(--card));color:color-mix(in srgb,var(--rc) 65%,var(--tx))}
+button.do{margin-inline-start:auto;border:0;background:var(--nc,var(--ac));color:var(--bg);font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer}
+button.lk{border:0;background:none;color:var(--mu);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:4px}
+button.ev{justify-self:start;padding:0;text-align:start}
+button.q{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+button.q.on{background:var(--ac);border-color:var(--ac);color:var(--bg)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.add{margin-top:18px;padding:14px;border:1px dashed var(--bd);border-radius:12px}
+.add h2{font-size:15px;margin:0 0 8px}
+.f{display:flex;gap:8px;flex-wrap:wrap}
+input.t{flex:1 1 150px}input.d{width:90px}
+textarea{width:100%;height:120px;margin-top:8px;font:12px/1.3 ui-monospace,monospace;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px}
+.foot{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap}
+.meta{color:var(--mu);font-size:13px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--card);width:100%;max-width:520px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet{max-height:88vh;overflow-y:auto}
+.sheet h3{margin:0;font-size:18px}
+.cur{color:var(--ac);font-weight:700;font-size:22px;line-height:1.25}
+.sub:empty{display:none}
+.wh{position:relative;height:120px;margin:10px 0;display:flex;align-items:center;gap:14px}
+.wl{width:96px;flex:none;height:120px;overflow-y:auto;scroll-snap-type:y mandatory;scroll-padding-top:40px;padding:40px 0;text-align:center;scrollbar-width:none}
+.wl div{height:40px;line-height:40px;scroll-snap-align:start;color:var(--mu)}
+.band{position:absolute;left:0;width:96px;top:40px;height:40px;border-top:1px solid var(--ac);border-bottom:1px solid var(--ac);pointer-events:none}
+.sheet .f{margin-bottom:10px}
+</style>
+</head>
+<body>
+<main>
+<header><h1>Lately</h1><div class="tools"><select id="lg" aria-label="Language"></select><button class="gear" id="gr" aria-label="Settings">⚙</button></div></header>
+<p class="sub" id="sub"></p>
+<div class="cats" id="cats"></div>
+<div id="list"></div>
+<div class="add">
+<h2 id="addh"></h2>
+<div class="f"><input class="t" id="nn" placeholder="Name, for example Wash the dog" maxlength="40"><input class="d" id="nd" type="number" min="1" max="730" placeholder="Every … days"><button class="do" id="addb" style="margin:0">Add</button></div>
+<div class="meta" id="err" style="color:var(--bad);margin-top:6px"></div>
+</div>
+<div class="foot"><button class="lk" id="pd"></button><button class="lk" id="exp">Export my data</button><button class="lk" id="rst">Reset everything</button></div>
+<textarea id="ta" hidden readonly></textarea>
+</main>
+<div class="ov" id="st" hidden><div class="sheet"><h3>Settings</h3>
+<div class="srow"><span>Theme</span><button class="q" id="th"></button></div>
+<div class="srow"><span>Notifications</span><button class="q" id="nt"></button></div>
+<p class="meta">Reminders arrive in the Android app. Your choice is saved for then.</p>
+<h4>How to use</h4><p class="meta" id="hu"></p><p class="meta">Green means on track, amber is due soon, orange is almost due, and red is overdue. Tap the line under an item (for example Every 3 months ✎) to change how often.</p>
+<h4>Add to your home screen</h4><p class="meta">Android (Chrome): open the menu ⋮ and choose Add to Home screen or Install app. iPhone (Safari): tap Share, then Add to Home Screen.</p>
+<h4>Feedback</h4><textarea id="fb" style="height:70px" placeholder="What do you like? What is confusing or broken?"></textarea><button class="q" id="fc">Copy my feedback</button><p class="meta">Paste it in a message to whoever shared this beta with you.</p>
+<h4>About</h4><p class="meta">Lately, beta version. Your data stays on this device.</p>
+<button class="do" data-sx="1" style="margin:12px 0 0">Close</button></div></div>
+<div class="ov" id="ov" hidden></div>
+<script>
+var IC={
+vehicle:'<path d="M6 15l3-6h11l4 6z" fill="var(--nc)" opacity=".55"/><rect x="3" y="15" width="26" height="8" rx="3" fill="var(--nc)"/><circle cx="9" cy="24" r="3" fill="var(--tx)"/><circle cx="23" cy="24" r="3" fill="var(--tx)"/>',
+property:'<path d="M16 4L3 15h4v12h18V15h4z" fill="var(--nc)"/><rect x="13" y="19" width="6" height="8" fill="var(--tx)"/><rect x="9" y="17" width="3" height="3" fill="var(--card)"/><rect x="20" y="17" width="3" height="3" fill="var(--card)"/>',
+household:'<path d="M24 4L13 18" stroke="var(--tx)" stroke-width="2.5" stroke-linecap="round"/><path d="M10 16l7 5-3 9H4l3-9z" fill="var(--nc)"/>',
+health:'<rect x="5" y="18" width="24" height="9" rx="4.5" fill="var(--nc)"/><rect x="5" y="7" width="8" height="16" rx="4" fill="var(--nc)"/><circle cx="19" cy="17" r="6" fill="var(--nc)"/><circle cx="9" cy="8" r="4.5" fill="var(--tx)"/>',
+people:'<circle cx="9" cy="9" r="3.5" fill="var(--tx)"/><path d="M3 26v-7a6 6 0 0 1 12 0v7z" fill="var(--tx)"/><rect x="17" y="19" width="12" height="7" rx="3" fill="var(--nc)"/><circle cx="26" cy="16" r="4" fill="var(--nc)"/><path d="M28 12l3 2-3 3z" fill="var(--nc)"/><rect x="18" y="24" width="2.5" height="4" fill="var(--nc)"/><rect x="26" y="24" width="2.5" height="4" fill="var(--nc)"/>',
+money:'<ellipse cx="14" cy="23" rx="9" ry="3.5" fill="var(--nc)"/><ellipse cx="14" cy="17" rx="9" ry="3.5" fill="var(--nc)" opacity=".7"/><ellipse cx="14" cy="11" rx="9" ry="3.5" fill="var(--nc)"/><circle cx="24" cy="10" r="6" fill="var(--tx)"/><path d="M21 10l2.2 2.3L27 8" stroke="var(--card)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'};
+var CATS=[
+{id:"vehicle",k:"veh",c:"var(--n1)",d:[["Oil change",180],["Rotate tires",180],["Check tire pressure",30],["Wash the car",14],["Vacuum inside",30],["Replace wiper blades",365],["Check brakes",365],["Change air filter",365],["Top up washer fluid",60],["Test the battery",365]]},
+{id:"property",k:"pro",c:"var(--n2)",d:[["Clean gutters",180],["Replace furnace filter",90],["Test smoke detectors",180],["Clean windows",90],["Vacuum baseboard heaters",90],["Flush water heater",365],["Inspect the roof",365],["Clean dryer vent",365],["Service heating and cooling",365],["Check caulking",365]]},
+{id:"household",k:"hou",c:"var(--n3)",d:[["Mop floors",7],["Wash bedding",14],["Clean the fridge",60],["Clean the oven",90],["Wash towels",7],["Empty the vacuum",14],["Clean the bathroom",7],["Dust surfaces",14],["Descale the kettle",60],["Clean the washing machine",90]]},
+{id:"health",k:"hea",c:"var(--n4)",d:[["Workout",3],["Stretches",1],["Floss",1],["Dentist visit",180],["Eye exam",730],["Replace toothbrush",90],["Annual check-up",365],["Long walk",3],["Meal prep",7],["Trim nails",10]]},
+{id:"people",k:"peo",c:"var(--n5)",d:[["Call a parent",7],["Call a friend",14],["Date night",14],["Vet checkup",365],["Flea treatment",30],["Pet nail trim",30],["Wash pet bedding",14],["Deep clean litter or cage",30],["Family dinner",7],["Plan a family outing",30]]},
+{id:"money",k:"mon",c:"var(--n6)",d:[["Review subscriptions",90],["Back up your phone",30],["Change key passwords",180],["Check bank statements",30],["Check credit report",365],["Update your budget",30],["Review insurance",365],["Check document expiry dates",365],["Clear your email inbox",30],["Review investments",90]]}
+];
+IC.household='<g transform="rotate(18 16 16)"><rect x="14.5" y="1" width="3" height="15" rx="1.5" fill="var(--tx)"/><rect x="10" y="15" width="12" height="3.5" rx="1" fill="var(--tx)"/><path d="M9 19h14l3 11H6z" fill="var(--nc)"/><path d="M12 22v8M16 22v8M20 22v8" stroke="var(--card)" stroke-width="1.2" opacity=".7"/></g>';
+IC.health='<rect x="3" y="3" width="11" height="9" rx="3" fill="var(--tx)"/><rect x="4" y="9" width="9" height="14" rx="4" fill="var(--nc)"/><rect x="4" y="19" width="26" height="9" rx="4.5" fill="var(--nc)"/><path d="M12 21C13 9 27 9 29 21z" fill="var(--nc)"/>';
+IC.people='<circle cx="7" cy="5" r="3.2" fill="var(--tx)"/><rect x="3" y="9.5" width="8" height="10" rx="3" fill="var(--tx)"/><rect x="0.5" y="10" width="2.5" height="8" rx="1.2" fill="var(--tx)"/><rect x="11" y="10" width="2.5" height="8" rx="1.2" fill="var(--tx)"/><rect x="3.8" y="19" width="2.8" height="10" rx="1.2" fill="var(--tx)"/><rect x="7.4" y="19" width="2.8" height="10" rx="1.2" fill="var(--tx)"/><rect x="16" y="17" width="12" height="7" rx="3.5" fill="var(--nc)"/><circle cx="28" cy="14.5" r="3.6" fill="var(--nc)"/><rect x="29.5" y="14" width="2.5" height="3" rx="1.2" fill="var(--nc)"/><path d="M25.5 11.5l-1 4 3-1z" fill="var(--tx)"/><rect x="17" y="23" width="2.4" height="6.5" rx="1" fill="var(--nc)"/><rect x="25" y="23" width="2.4" height="6.5" rx="1" fill="var(--nc)"/><path d="M16.5 18.5l-1.8-3" stroke="var(--nc)" stroke-width="2" stroke-linecap="round"/>';
+IC.money='<g fill="var(--nc)" stroke="var(--card)" stroke-width="1"><ellipse cx="8" cy="25" rx="6.5" ry="3.2" opacity=".6"/><ellipse cx="8" cy="20" rx="6.5" ry="3.2"/><ellipse cx="8" cy="15" rx="6.5" ry="3.2" opacity=".6"/></g><rect x="15" y="4" width="13" height="20" rx="2" fill="var(--card)" stroke="var(--tx)" stroke-width="1.8"/><path d="M18 9h7M18 13h7M18 17h4" stroke="var(--tx)" stroke-width="1.4" stroke-linecap="round"/><path d="M28 12L20 27" stroke="var(--nc)" stroke-width="3.2" stroke-linecap="round"/><circle cx="19.6" cy="28" r="1.1" fill="var(--tx)"/>';
+var IT={
+es:"Cambio de aceite|Rotar neumáticos|Revisar presión de neumáticos|Lavar el coche|Aspirar el interior|Cambiar limpiaparabrisas|Revisar frenos|Cambiar filtro de aire|Rellenar líquido limpiaparabrisas|Probar la batería|Limpiar canalones|Cambiar filtro de calefacción|Probar detectores de humo|Limpiar ventanas|Aspirar radiadores de zócalo|Purgar calentador de agua|Inspeccionar el tejado|Limpiar conducto de secadora|Revisar calefacción y aire|Revisar sellado|Fregar suelos|Lavar la ropa de cama|Limpiar la nevera|Limpiar el horno|Lavar toallas|Vaciar la aspiradora|Limpiar el baño|Quitar el polvo|Descalcificar el hervidor|Limpiar la lavadora|Entrenar|Estirar|Hilo dental|Visita al dentista|Examen de la vista|Cambiar cepillo de dientes|Chequeo anual|Caminata larga|Preparar comidas|Cortar uñas|Llamar a un padre|Llamar a un amigo|Cita romántica|Revisión veterinaria|Tratamiento antipulgas|Cortar uñas a la mascota|Lavar cama de mascota|Limpieza profunda de arenero o jaula|Cena familiar|Planear salida familiar|Revisar suscripciones|Copia de seguridad del móvil|Cambiar contraseñas clave|Revisar extractos bancarios|Revisar informe de crédito|Actualizar presupuesto|Revisar seguros|Revisar vencimiento de documentos|Vaciar bandeja de correo|Revisar inversiones",
+fr:"Vidange|Permuter les pneus|Vérifier la pression des pneus|Laver la voiture|Aspirer l’intérieur|Changer les essuie-glaces|Vérifier les freins|Changer le filtre à air|Remplir le lave-glace|Tester la batterie|Nettoyer les gouttières|Changer le filtre de la fournaise|Tester les détecteurs de fumée|Laver les fenêtres|Aspirer les plinthes chauffantes|Purger le chauffe-eau|Inspecter le toit|Nettoyer le conduit de sécheuse|Entretien chauffage et climatisation|Vérifier le calfeutrage|Laver les planchers|Laver la literie|Nettoyer le frigo|Nettoyer le four|Laver les serviettes|Vider l’aspirateur|Nettoyer la salle de bain|Épousseter|Détartrer la bouilloire|Nettoyer la laveuse|Entraînement|Étirements|Fil dentaire|Visite chez le dentiste|Examen de la vue|Changer la brosse à dents|Bilan annuel|Longue marche|Préparer les repas|Couper les ongles|Appeler un parent|Appeler un ami|Soirée en amoureux|Visite chez le vétérinaire|Traitement antipuces|Couper les griffes de l’animal|Laver la literie de l’animal|Grand nettoyage litière ou cage|Souper en famille|Planifier une sortie en famille|Revoir les abonnements|Sauvegarder le téléphone|Changer les mots de passe clés|Vérifier les relevés bancaires|Vérifier le dossier de crédit|Mettre à jour le budget|Revoir les assurances|Vérifier l’expiration des documents|Vider la boîte courriel|Revoir les placements",
+pt:"Troca de óleo|Rodízio de pneus|Verificar pressão dos pneus|Lavar o carro|Aspirar o interior|Trocar palhetas|Verificar freios|Trocar filtro de ar|Completar água do limpador|Testar a bateria|Limpar calhas|Trocar filtro do aquecedor|Testar detectores de fumaça|Limpar janelas|Aspirar aquecedores de rodapé|Drenar aquecedor de água|Inspecionar o telhado|Limpar duto da secadora|Revisar aquecimento e ar|Verificar vedação|Passar pano no chão|Lavar roupa de cama|Limpar a geladeira|Limpar o forno|Lavar toalhas|Esvaziar o aspirador|Limpar o banheiro|Tirar o pó|Descalcificar a chaleira|Limpar a máquina de lavar|Treino|Alongamento|Fio dental|Consulta ao dentista|Exame de vista|Trocar escova de dentes|Check-up anual|Caminhada longa|Preparar refeições|Cortar unhas|Ligar para um dos pais|Ligar para um amigo|Encontro a dois|Consulta ao veterinário|Tratamento antipulgas|Cortar unhas do pet|Lavar cama do pet|Limpeza geral da caixa ou gaiola|Jantar em família|Planejar passeio em família|Revisar assinaturas|Fazer backup do celular|Trocar senhas principais|Conferir extratos bancários|Consultar relatório de crédito|Atualizar orçamento|Revisar seguros|Conferir validade de documentos|Esvaziar caixa de e-mail|Revisar investimentos",
+de:"Ölwechsel|Reifen tauschen|Reifendruck prüfen|Auto waschen|Innenraum saugen|Scheibenwischer wechseln|Bremsen prüfen|Luftfilter wechseln|Scheibenwasser auffüllen|Batterie testen|Dachrinnen reinigen|Heizungsfilter wechseln|Rauchmelder testen|Fenster putzen|Heizleisten absaugen|Warmwasserboiler spülen|Dach prüfen|Trocknerschlauch reinigen|Heizung und Klima warten|Fugen prüfen|Böden wischen|Bettwäsche waschen|Kühlschrank reinigen|Backofen reinigen|Handtücher waschen|Staubsauger leeren|Bad putzen|Staub wischen|Wasserkocher entkalken|Waschmaschine reinigen|Training|Dehnen|Zahnseide|Zahnarztbesuch|Augenuntersuchung|Zahnbürste wechseln|Jahres-Check-up|Langer Spaziergang|Essen vorbereiten|Nägel schneiden|Eltern anrufen|Freund anrufen|Date-Abend|Tierarztkontrolle|Flohbehandlung|Krallen schneiden|Tierbett waschen|Katzenklo oder Käfig gründlich reinigen|Familienessen|Familienausflug planen|Abos prüfen|Handy sichern|Wichtige Passwörter ändern|Kontoauszüge prüfen|Bonitätsbericht prüfen|Budget aktualisieren|Versicherungen prüfen|Dokumentenablauf prüfen|E-Mail-Postfach aufräumen|Geldanlagen prüfen",
+zh:"换机油|轮胎换位|检查胎压|洗车|车内吸尘|更换雨刷|检查刹车|更换空气滤芯|添加玻璃水|检测电瓶|清理排水沟|更换暖炉滤网|测试烟雾报警器|擦窗户|清理踢脚线暖气|冲洗热水器|检查屋顶|清理烘干机排风管|检修暖气与空调|检查密封胶|拖地|清洗床上用品|清洁冰箱|清洁烤箱|洗毛巾|清空吸尘器|打扫浴室|擦灰|水壶除垢|清洁洗衣机|锻炼|拉伸|用牙线|看牙医|检查视力|更换牙刷|年度体检|长时间散步|备餐|剪指甲|给父母打电话|给朋友打电话|约会之夜|宠物体检|驱跳蚤|给宠物剪指甲|清洗宠物垫|彻底清理猫砂盆或笼子|家庭聚餐|计划家庭出游|检查订阅|备份手机|更换重要密码|核对银行对账单|查看信用报告|更新预算|检查保险|检查证件到期日|清理邮箱|检查投资",
+hi:"इंजन ऑयल बदलना|टायर बदलना|टायर प्रेशर जांचना|कार धोना|अंदर वैक्यूम करना|वाइपर ब्लेड बदलना|ब्रेक जांचना|एयर फिल्टर बदलना|वॉशर फ्लूइड भरना|बैटरी जांचना|गटर साफ करना|हीटर फिल्टर बदलना|स्मोक डिटेक्टर जांचना|खिड़कियां साफ करना|बेसबोर्ड हीटर साफ करना|वॉटर हीटर फ्लश करना|छत की जांच|ड्रायर वेंट साफ करना|हीटिंग और कूलिंग सर्विस|सीलिंग जांचना|फर्श पोंछना|बिस्तर की चादरें धोना|फ्रिज साफ करना|ओवन साफ करना|तौलिए धोना|वैक्यूम खाली करना|बाथरूम साफ करना|धूल पोंछना|केतली की सफाई|वॉशिंग मशीन साफ करना|वर्कआउट|स्ट्रेचिंग|फ्लॉस करना|दंत चिकित्सक के पास जाना|आंखों की जांच|टूथब्रश बदलना|सालाना चेक-अप|लंबी सैर|खाना पहले से तैयार करना|नाखून काटना|माता-पिता को फोन|दोस्त को फोन|डेट नाइट|पशु चिकित्सक जांच|पिस्सू का इलाज|पालतू के नाखून काटना|पालतू का बिस्तर धोना|कूड़ेदान या पिंजरे की सफाई|पारिवारिक रात्रिभोज|पारिवारिक सैर की योजना|सब्सक्रिप्शन देखना|फोन का बैकअप|मुख्य पासवर्ड बदलना|बैंक स्टेटमेंट जांचना|क्रेडिट रिपोर्ट जांचना|बजट अपडेट करना|बीमा देखना|दस्तावेज़ों की समाप्ति तिथि जांचना|ईमेल इनबॉक्स साफ करना|निवेश देखना",
+ar:"تغيير الزيت|تدوير الإطارات|فحص ضغط الإطارات|غسل السيارة|تنظيف الداخل بالمكنسة|تغيير مساحات الزجاج|فحص الفرامل|تغيير فلتر الهواء|تعبئة ماء المساحات|فحص البطارية|تنظيف المزاريب|تغيير فلتر المدفأة|فحص كواشف الدخان|تنظيف النوافذ|تنظيف مدافئ الأرضية|تصريف سخان المياه|فحص السقف|تنظيف مجرى المجفف|صيانة التدفئة والتكييف|فحص السدادات|مسح الأرضيات|غسل الأغطية|تنظيف الثلاجة|تنظيف الفرن|غسل المناشف|تفريغ المكنسة|تنظيف الحمام|إزالة الغبار|إزالة الترسبات من الغلاية|تنظيف الغسالة|تمرين|تمدد|خيط الأسنان|زيارة طبيب الأسنان|فحص النظر|تغيير فرشاة الأسنان|فحص سنوي|مشي طويل|تحضير الوجبات|قص الأظافر|الاتصال بأحد الوالدين|الاتصال بصديق|سهرة ثنائية|فحص الطبيب البيطري|علاج البراغيث|قص أظافر الحيوان|غسل فراش الحيوان|تنظيف صندوق الفضلات أو القفص|عشاء عائلي|تخطيط نزهة عائلية|مراجعة الاشتراكات|نسخ احتياطي للهاتف|تغيير كلمات المرور المهمة|مراجعة كشوف الحساب|مراجعة تقرير الائتمان|تحديث الميزانية|مراجعة التأمين|فحص تواريخ انتهاء المستندات|تنظيف صندوق البريد|مراجعة الاستثمارات",
+ru:"Замена масла|Перестановка шин|Проверка давления в шинах|Помыть машину|Пропылесосить салон|Заменить щётки стеклоочистителя|Проверить тормоза|Заменить воздушный фильтр|Долить омывайку|Проверить аккумулятор|Почистить водостоки|Заменить фильтр котла|Проверить датчики дыма|Помыть окна|Пропылесосить плинтусные обогреватели|Промыть водонагреватель|Осмотреть крышу|Почистить вентиляцию сушилки|Обслужить отопление и кондиционер|Проверить герметик|Помыть полы|Постирать постельное бельё|Помыть холодильник|Помыть духовку|Постирать полотенца|Очистить пылесос|Убрать в ванной|Вытереть пыль|Очистить чайник от накипи|Почистить стиральную машину|Тренировка|Растяжка|Зубная нить|Визит к стоматологу|Проверка зрения|Сменить зубную щётку|Ежегодный осмотр|Долгая прогулка|Приготовить еду заранее|Подстричь ногти|Позвонить родителям|Позвонить другу|Вечер вдвоём|Осмотр у ветеринара|Обработка от блох|Подстричь когти питомцу|Постирать подстилку питомца|Генеральная уборка лотка или клетки|Семейный ужин|Спланировать семейную поездку|Проверить подписки|Сделать резервную копию телефона|Сменить главные пароли|Проверить банковские выписки|Проверить кредитную историю|Обновить бюджет|Проверить страховки|Проверить сроки документов|Разобрать почту|Проверить инвестиции",
+ja:"オイル交換|タイヤのローテーション|タイヤ空気圧の確認|洗車|車内の掃除機がけ|ワイパーの交換|ブレーキの点検|エアフィルターの交換|ウォッシャー液の補充|バッテリーの点検|雨どいの掃除|暖房フィルターの交換|火災報知器のテスト|窓の掃除|巾木ヒーターの掃除|給湯器の水抜き|屋根の点検|乾燥機の排気口の掃除|冷暖房の点検|コーキングの確認|床の拭き掃除|寝具の洗濯|冷蔵庫の掃除|オーブンの掃除|タオルの洗濯|掃除機のゴミ捨て|浴室の掃除|ほこり取り|ケトルの水垢取り|洗濯機の掃除|運動|ストレッチ|フロス|歯医者|視力検査|歯ブラシの交換|年1回の健診|長めの散歩|作り置き|爪切り|親に電話|友達に電話|デートの夜|ペットの健診|ノミ対策|ペットの爪切り|ペットの寝床を洗う|トイレやケージの大掃除|家族の夕食|家族のお出かけ計画|サブスクの見直し|スマホのバックアップ|重要なパスワードの変更|銀行明細の確認|信用情報の確認|予算の更新|保険の見直し|書類の有効期限の確認|メールの整理|投資の見直し"};
+var UI={
+en:"Tap the button when you finish something. Red means overdue.|Add your own item|Clear|Delete|Export my data|Reset everything",
+es:"Toca el botón cuando termines algo. Rojo significa atrasado.|Añade tu propio elemento|Borrar|Eliminar|Exportar mis datos|Restablecer todo",
+fr:"Touchez le bouton quand c’est fait. Rouge signifie en retard.|Ajouter votre propre élément|Effacer|Supprimer|Exporter mes données|Tout réinitialiser",
+pt:"Toque no botão quando terminar algo. Vermelho significa atrasado.|Adicione seu próprio item|Limpar|Excluir|Exportar meus dados|Redefinir tudo",
+de:"Tippe auf den Button, wenn du etwas erledigt hast. Rot bedeutet überfällig.|Eigenen Eintrag hinzufügen|Zurücksetzen|Löschen|Meine Daten exportieren|Alles zurücksetzen",
+zh:"完成后点按按钮。红色表示已逾期。|添加自己的项目|清除|删除|导出我的数据|全部重置",
+hi:"काम पूरा होने पर बटन दबाएं। लाल का मतलब देर हो चुकी है।|अपना खुद का आइटम जोड़ें|साफ करें|हटाएं|मेरा डेटा निर्यात करें|सब कुछ रीसेट करें",
+ar:"اضغط الزر عند إنجاز شيء. اللون الأحمر يعني متأخر.|أضف عنصرك الخاص|مسح|حذف|تصدير بياناتي|إعادة ضبط الكل",
+ru:"Нажмите кнопку, когда закончите. Красный значит просрочено.|Добавить свой пункт|Сбросить|Удалить|Экспорт данных|Сбросить всё",
+ja:"完了したらボタンを押します。赤は期限切れです。|自分の項目を追加|クリア|削除|データを書き出す|すべてリセット"};
+function nm(c,k,en){var s=IT[lang];if(!s)return en;if(typeof s==="string")s=IT[lang]=s.split("|");return s[CATS.indexOf(c)*10+k]||en}
+IC.health='<path d="M16 28C6 21 3 16 3 11a6.5 6.5 0 0 1 13-2 6.5 6.5 0 0 1 13 2c0 5-3 10-13 17z" fill="var(--nc)"/><path d="M16 10v10M11 15h10" stroke="var(--card)" stroke-width="3.2" stroke-linecap="round"/>';
+IC.people='<circle cx="8.5" cy="6" r="4" fill="var(--tx)"/><rect x="3" y="11" width="11" height="10" rx="3" fill="var(--tx)"/><rect x="5" y="20" width="3" height="9" rx="1.4" fill="var(--tx)"/><rect x="9" y="20" width="3" height="9" rx="1.4" fill="var(--tx)"/><rect x="16" y="17" width="15" height="8" rx="4" fill="var(--nc)"/><circle cx="27.5" cy="13" r="4.3" fill="var(--nc)"/><path d="M25 9.5l-.5 4.5 3.5-2z" fill="var(--tx)"/><rect x="17.5" y="24" width="3" height="6" rx="1.2" fill="var(--nc)"/><rect x="26" y="24" width="3" height="6" rx="1.2" fill="var(--nc)"/>';
+var SG={en:["day","month"],es:["día","mes"],fr:["jour","mois"],pt:["dia","mês"],de:["Tag","Monat"]};
+IC.people='<circle cx="9" cy="5.5" r="4" fill="var(--tx)"/><rect x="4.5" y="10.5" width="9" height="10" rx="3" fill="var(--tx)"/><rect x="1.5" y="11" width="2.4" height="9" rx="1.2" fill="var(--tx)"/><rect x="14.1" y="11" width="2.4" height="9" rx="1.2" fill="var(--tx)"/><rect x="5.8" y="20" width="3" height="9.5" rx="1.4" fill="var(--tx)"/><rect x="9.2" y="20" width="3" height="9.5" rx="1.4" fill="var(--tx)"/><g fill="var(--nc)"><ellipse cx="23" cy="25.5" rx="3.8" ry="3.2"/><circle cx="19.5" cy="21" r="1.7"/><circle cx="22" cy="19" r="1.7"/><circle cx="25" cy="19" r="1.7"/><circle cx="27.5" cy="21" r="1.7"/><ellipse cx="27" cy="12.5" rx="3.2" ry="2.7"/><circle cx="24" cy="9" r="1.5"/><circle cx="26" cy="7.2" r="1.5"/><circle cx="28.5" cy="7.2" r="1.5"/><circle cx="30.5" cy="9" r="1.5"/></g>';
+var KEYS="veh,pro,hou,hea,peo,mon,done,ok,soon,almost,today,over,none,ago,tod,every,days,months,add".split(",");
+var LG={
+en:["🇺🇸","English","Vehicle|Property|Household|Health|People and pets|Money and admin|Done today|On track|Due soon|Almost due|Due today|Overdue|Not started|days ago|today|Every|days|months|Add"],
+es:["🇪🇸","Español","Vehículo|Propiedad|Hogar|Salud|Personas y mascotas|Dinero y trámites|Hecho hoy|Al día|Pronto|Casi vence|Vence hoy|Atrasado|Sin empezar|días atrás|hoy|Cada|días|meses|Añadir"],
+fr:["🇫🇷","Français","Véhicule|Propriété|Ménage|Santé|Proches et animaux|Argent et admin|Fait aujourd’hui|Dans les temps|Bientôt dû|Presque dû|Dû aujourd’hui|En retard|Pas commencé|jours écoulés|aujourd’hui|Tous les|jours|mois|Ajouter"],
+pt:["🇧🇷","Português","Veículo|Imóvel|Casa|Saúde|Pessoas e pets|Dinheiro e burocracia|Feito hoje|Em dia|Vence em breve|Quase vencendo|Vence hoje|Atrasado|Não iniciado|dias atrás|hoje|A cada|dias|meses|Adicionar"],
+de:["🇩🇪","Deutsch","Fahrzeug|Immobilie|Haushalt|Gesundheit|Menschen und Tiere|Geld und Verwaltung|Heute erledigt|Im Plan|Bald fällig|Fast fällig|Heute fällig|Überfällig|Nicht begonnen|Tage her|heute|Alle|Tage|Monate|Hinzufügen"],
+zh:["🇨🇳","中文","车辆|房产|家务|健康|家人与宠物|财务与事务|今天完成|正常|即将到期|快到期|今天到期|已逾期|未开始|天前|今天|每|天|个月|添加"],
+hi:["🇮🇳","हिन्दी","वाहन|संपत्ति|घर के काम|सेहत|लोग और पालतू|पैसा और कागज़ात|आज हो गया|समय पर|जल्द देय|लगभग देय|आज देय|देर हो चुकी|शुरू नहीं|दिन पहले|आज|हर|दिन|महीने|जोड़ें"],
+ar:["🇸🇦","العربية","المركبة|العقار|المنزل|الصحة|الأشخاص والحيوانات|المال والإدارة|تم اليوم|في الموعد|يحين قريبًا|يقترب موعده|يحين اليوم|متأخر|لم يبدأ|أيام مضت|اليوم|كل|يومًا|أشهر|إضافة"],
+ru:["🇷🇺","Русский","Авто|Недвижимость|Дом|Здоровье|Люди и питомцы|Деньги и дела|Сделано сегодня|В срок|Скоро срок|Почти срок|Срок сегодня|Просрочено|Не начато|дн. назад|сегодня|Каждые|дн.|мес.|Добавить"],
+ja:["🇯🇵","日本語","乗り物|住まい|家事|健康|家族とペット|お金と手続き|今日やった|順調|もうすぐ|期限間近|今日が期限|期限切れ|未開始|日前|今日|毎|日|か月|追加"]};
+var S,T={},lang="en",cur="vehicle",ed=null,W=[],tm;
+for(var i=1;i<=730;i++)W.push(i);
+function load(){var v=null;try{v=JSON.parse(localStorage.getItem("ds1"))}catch(e){}if(!v||!v.done)v={done:{},custom:{}};v.custom=v.custom||{};v.ov=v.ov||{};return v}
+function save(){try{localStorage.setItem("ds1",JSON.stringify(S))}catch(e){}}
+S=load();
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function setLang(){var c=S.lang||(navigator.language||"en").slice(0,2).toLowerCase();if(!LG[c])c="en";lang=c;var a=LG[c][2].split("|");KEYS.forEach(function(k,i){T[k]=a[i]});document.documentElement.lang=c;var u=UI[c].split("|");$("hu").textContent=u[0];$("addh").textContent=u[1];$("exp").textContent=u[4];$("rst").textContent=u[5];$("addb").textContent=T.add;T.clr=u[2];T.del=u[3];document.documentElement.dir=c==="ar"?"rtl":"ltr";$("lg").value=c}
+function applyTheme(){var r=document.documentElement,t=S.theme||"auto";if(t==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);$("th").textContent={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"}[t];$("pd").textContent="Paid features (test): "+(S.paid?"on":"off");$("nt").textContent=S.notif?"On":"Off";$("nt").className="q"+(S.notif?" on":"")}
+function fromHash(){var h=location.hash.slice(1);CATS.forEach(function(c){if(c.id===h)cur=h})}
+function day0(t){var d=new Date(t);return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()}
+function since(t){return Math.round((day0(Date.now())-day0(t))/864e5)}
+function pl(n,k){var s=SG[lang];return n+" "+((n===1&&s)?s[k]:(k?T.months:T.days))}
+function lab(v){if(v<30)return pl(v,0);if(v===365)return pl(12,1);if(v===730)return pl(24,1);var m=Math.floor(v/30),r=v-m*30;return pl(m,1)+(r?", "+pl(r,0):"")}
+function idx(v){return v-1}
+function catOf(id){return CATS.filter(function(c){return c.id===id})[0]}
+function items(c){var out=[];c.d.forEach(function(x,k){out.push({id:c.id+"-"+k,n:nm(c,k,x[0]),d:x[1],c:0})});(S.custom[c.id]||[]).forEach(function(x){out.push({id:x.id,n:x.n,d:x.d,c:1})});out.forEach(function(it){var o=S.ov[it.id];if(o){if(o.d)it.d=o.d;if(o.n)it.n=o.n}});return out}
+function st(it){var t=S.done[it.id];if(!t)return{k:"nv",l:T.none,n:"—",u:""};var d=since(t),r=d/it.d,k,l;
+if(d>it.d){k="bad";l=T.over}else if(d===it.d){k="or";l=T.today}else if(r>=.95){k="or";l=T.almost}else if(r>=.85){k="am";l=T.soon}else{k="ok";l=T.ok}
+return{k:k,l:l,n:d,u:d===0?T.tod:(lang==="en"&&d===1?"day ago":T.ago)}}
+function render(){
+var h="";
+CATS.forEach(function(c){var o=items(c).filter(function(it){return st(it).k==="bad"}).length;h+='<button class="cat" data-c="'+c.id+'" aria-pressed="'+(c.id===cur)+'" style="--nc:'+c.c+'"><span class="ic"><svg viewBox="0 0 32 32" aria-hidden="true">'+IC[c.id]+'</svg></span>'+T[c.k]+(o?'<span class="n">'+o+'</span>':'')+'</button>'});
+$("cats").innerHTML=h;
+var l="";
+items(catOf(cur)).forEach(function(it){var s=st(it);l+='<div class="item '+s.k+'"><div class="nm">'+esc(it.n)+'</div><div class="big"><span>'+s.n+'</span><small>'+s.u+'</small></div><button class="lk ev" data-e="'+it.id+'">'+T.every+' '+lab(it.d)+' ✎</button><div class="row"><span class="pill">'+s.l+'</span>'+(S.done[it.id]?'<button class="lk" data-u="'+it.id+'">'+T.clr+'</button>':'')+(it.c?'<button class="lk" data-x="'+it.id+'">'+T.del+'</button>':'')+'<button class="do" data-d="'+it.id+'">'+T.done+'</button></div></div>'});
+$("list").style.setProperty("--nc",catOf(cur).c);$("list").innerHTML=l}
+function setV(v,from){v=Math.max(1,Math.min(730,v));ed.v=v;
+if(from!=="input"){$("eu").value="d";$("ev").value=v}
+if(from!=="wheel")$("wl").scrollTop=idx(v)*40;
+$("ey").textContent=lab(v)}
+function fromInput(){var n=parseInt($("ev").value,10);if(!(n>=1))return;setV($("eu").value==="m"?(n===12?365:n===24?730:n*30):n,"input")}
+function openEd(id){var it=items(catOf(cur)).filter(function(x){return x.id===id})[0];if(!it)return;ed={id:id,v:it.d,n:it.n};
+var o="";W.forEach(function(v){o+="<div>"+v+"</div>"});
+$("ov").innerHTML='<div class="sheet"><h3>'+esc(it.n)+'</h3><div class="wh"><div class="band"></div><div class="wl" id="wl">'+o+'</div><div class="cur" id="ey"></div></div><div class="f"><input id="ev" type="number" inputmode="numeric" min="1" max="730" style="width:90px"><select id="eu"><option value="d">'+T.days+'</option><option value="m">'+T.months+'</option></select></div><div class="f"><button class="q" data-q="7">Weekly</button><button class="q" data-q="30">Monthly</button><button class="q" data-q="90">3 months</button><button class="q" data-q="180">6 months</button><button class="q" data-q="365">Yearly</button></div>'+(S.paid?'<div class="f"><input id="en" class="t" maxlength="40" value="'+esc(it.n)+'" aria-label="Name"></div>':'<div class="meta" style="margin-bottom:10px">🔒 Renaming is in the paid version</div>')+'<div class="f"><button class="do" data-s="1" style="margin:0">Save</button><button class="q" data-cx="1">Cancel</button><button class="lk" data-r="1">Reset to default</button></div></div>';
+$("ov").hidden=false;
+$("ev").addEventListener("input",fromInput);
+$("eu").addEventListener("change",function(){$("ev").value=this.value==="m"?Math.max(1,Math.floor(ed.v/30)):ed.v;fromInput()});
+$("wl").addEventListener("scroll",function(){clearTimeout(tm);tm=setTimeout(function(){setV(W[Math.max(0,Math.min(W.length-1,Math.round($("wl").scrollTop/40)))],"wheel")},80)});
+setV(it.d,"open")}
+function closeEd(){$("ov").hidden=true;$("ov").innerHTML="";ed=null}
+document.addEventListener("click",function(e){
+if(e.target.id==="ov"){closeEd();return}
+if(e.target.id==="st"){$("st").hidden=true;return}
+var b=e.target.closest("button");if(!b)return;
+if(b.dataset.c){cur=b.dataset.c;location.hash=cur;render();return}
+if(b.dataset.d){S.done[b.dataset.d]=Date.now();save();render();return}
+if(b.dataset.u){delete S.done[b.dataset.u];save();render();return}
+if(b.dataset.x){S.custom[cur]=(S.custom[cur]||[]).filter(function(x){return x.id!==b.dataset.x});delete S.done[b.dataset.x];delete S.ov[b.dataset.x];save();render();return}
+if(b.dataset.e){openEd(b.dataset.e);return}
+if(b.dataset.q){setV(+b.dataset.q,"quick");return}
+if(b.dataset.cx){closeEd();return}
+if(b.dataset.r){delete S.ov[ed.id];save();closeEd();render();return}
+if(b.dataset.s){var o=S.ov[ed.id]||{};o.d=ed.v;if(S.paid&&$("en")){var v2=$("en").value.trim();if(v2&&v2!==ed.n)o.n=v2}S.ov[ed.id]=o;save();closeEd();render();return}
+if(b.id==="gr"){$("st").hidden=false;return}
+if(b.dataset.sx){$("st").hidden=true;return}
+if(b.id==="nt"){S.notif=!S.notif;save();applyTheme();return}
+if(b.id==="fc"){var f=$("fb");f.select();try{navigator.clipboard.writeText(f.value)}catch(e){}return}
+if(b.id==="th"){S.theme={auto:"light",light:"dark",dark:"auto"}[S.theme||"auto"];save();applyTheme();return}
+if(b.id==="pd"){S.paid=!S.paid;save();applyTheme();return}
+if(b.id==="addb"){var n=$("nn"),d=$("nd"),er=$("err"),v=parseInt(d.value,10);
+if(!n.value.trim()){er.textContent="Enter a name first.";return}
+if(!(v>=1)){er.textContent="Enter how many days between each time.";return}
+er.textContent="";(S.custom[cur]=S.custom[cur]||[]).push({id:"c"+Date.now(),n:n.value.trim(),d:Math.min(v,730)});n.value="";d.value="";save();render();return}
+if(b.id==="exp"){var t=$("ta");t.hidden=false;t.value=JSON.stringify(S);t.focus();t.select();return}
+if(b.id==="rst"){if(confirm("Delete all your progress, edits and custom items?")){S={done:{},custom:{},ov:{}};save();applyTheme();setLang();render()}}
+});
+$("lg").innerHTML=Object.keys(LG).map(function(c){return'<option value="'+c+'">'+LG[c][0]+' '+LG[c][1]+'</option>'}).join("");
+$("lg").addEventListener("change",function(){S.lang=this.value;save();setLang();render()});
+window.addEventListener("hashchange",function(){fromHash();render()});
+fromHash();setLang();applyTheme();render();
+</script>
+</body>
+</html>
